@@ -109,7 +109,7 @@ function getListUsers()
     $db = dbConnect();
 
     // Préparation de la requête :
-    $request = $db->prepare('SELECT * FROM users');
+    $request = $db->prepare('SELECT id_user,pseudo,nom,prenom FROM users');
 
     // Execution de la requête :
     try {
@@ -118,7 +118,34 @@ function getListUsers()
         echo json_encode([
             "status" => 200,
             "message" => "Voici la liste des utilisateurs",
-            "data" => $listUsers
+            "users" => $listUsers
+        ]);
+    } catch (PDOException $error) {
+        echo json_encode([
+            "status" => 500,
+            "message" => $error->getMessage()
+        ]);
+    }
+}
+
+// fonction pour récuperer la conversation entre 2 users 
+function getListMessage($expediteur, $destinataire)
+{
+    // Se connecter à la base de données :
+    $db = dbConnect();
+
+    // Préparer la requête : 
+    $request = $db->prepare("SELECT * FROM messages WHERE expediteur_id = ? AND destinataire_id	 = ? OR expediteur_id = ? AND destinataire_id = ?");
+
+    // Executer la requête 
+    try {
+        $request->execute(array($expediteur, $destinataire, $destinataire, $expediteur));
+        // Récuperer le résultat dans un tableau 
+        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode([
+            "status" => 200,
+            "message" => "Voici les messages de vos discussions",
+            "listMessage" => $messages
         ]);
     } catch (PDOException $error) {
         echo json_encode([

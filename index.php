@@ -8,9 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $url = trim($url, "\/");
     $url = explode("/", $url);
     $action = $url[1];
-
     if ($action == "getuserlist") {
         getListUsers();
+    } else if ($action == "getListMessage") {
+        getListMessage($url[2], $url[3]);
+    } else {
+        echo json_encode([
+            "status" => 404,
+            "message" => "Not found"
+        ]);
     }
 } else {
     // ce que l'utilisateur envoi via un formulaire , on le récupère dans la variable $data

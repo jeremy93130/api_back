@@ -29,3 +29,7 @@ POST http://localhost/api_back/
     "action" : "send message"
 }
 
+
+###
+GET http://localhost/api_back/getListMessage/2/3
+
