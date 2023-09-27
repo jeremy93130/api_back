@@ -1,0 +1,31 @@
+###
+GET http://localhost/api_back/getuserlist/
+###
+POST http://localhost/api_back/
+
+{
+    "pseudo": "jeremy",
+    "motdepasse": "passe",
+    "action" : "login"
+}
+###
+POST http://localhost/api_back/
+
+{
+    "pseudo": "gogodancer56",
+    "motdepasse": "antoine1",
+    "nom": "delga",
+    "prenom": "antoine",
+    "action" : "register"
+}
+
+###
+POST http://localhost/api_back/
+
+{
+    "expediteur": 3,
+    "destinataire" : 2,
+    "message": "Contenu du message",
+    "action" : "send message"
+}
+
